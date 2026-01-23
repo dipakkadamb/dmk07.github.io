@@ -24,11 +24,7 @@
                         card: '#111827',
                         primary: '#00f2ff', /* Cyan Neon */
                         secondary: '#7000ff', /* Violet */
-                        textMain: '#f9fafb',
                         textGray: '#9ca3af'
-                    },
-                    backgroundImage: {
-                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                     }
                 }
             }
@@ -39,18 +35,23 @@
         body {
             background-color: #030712;
             color: #f9fafb;
-            overflow-x: hidden;
         }
 
-        /* --- NEURAL BACKGROUND --- */
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.5;
+        /* --- BACKGROUND PHOTO SETTINGS --- */
+        .hero-bg {
+            /* YOUR PHOTO HERE */
+            background-image: url('IMG_20260121_114841354.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+            position: relative;
+        }
+
+        /* Dark overlay so text is readable */
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(3, 7, 18, 0.95) 0%, rgba(3, 7, 18, 0.7) 100%);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
         }
 
         /* --- BENTO CARD STYLES --- */
@@ -64,44 +65,20 @@
             overflow: hidden;
         }
 
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-
-        .bento-card:hover::before {
-            opacity: 1;
-        }
-
         .bento-card:hover {
             transform: translateY(-4px);
             border-color: rgba(0, 242, 255, 0.3);
             box-shadow: 0 10px 40px -10px rgba(0, 242, 255, 0.1);
         }
 
-        /* --- TEXT GRADIENT --- */
         .text-gradient {
             background: linear-gradient(to right, #00f2ff, #7000ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* --- SCROLLBAR --- */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #374151; }
     </style>
 </head>
 <body>
-
-    <canvas id="neural-canvas"></canvas>
 
     <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-dark/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -109,8 +86,8 @@
                 DMK<span class="text-primary">07</span>
             </div>
             <div class="hidden md:flex gap-8 text-sm font-medium text-textGray">
-                <a href="#about" class="hover:text-white transition">About</a>
-                <a href="#stack" class="hover:text-white transition">Stack</a>
+                <a href="#home" class="hover:text-white transition">Home</a>
+                <a href="#stack" class="hover:text-white transition">Skills</a>
                 <a href="#experience" class="hover:text-white transition">Experience</a>
             </div>
             <a href="#contact" class="px-5 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium hover:bg-primary hover:text-black hover:border-primary transition-all">
@@ -119,10 +96,12 @@
         </div>
     </nav>
 
-    <header class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 space-y-6 text-center md:text-left">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono text-primary">
+    <header id="home" class="hero-bg min-h-screen flex items-center relative">
+        <div class="hero-overlay"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10 w-full pt-20">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-mono text-primary mb-6">
                     <span class="relative flex h-2 w-2">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                       <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -130,46 +109,42 @@
                     AI Architect & Zoho Specialist
                 </div>
                 
-                <h1 class="text-5xl md:text-7xl font-bold leading-tight font-mono">
-                    Designing the <br>
-                    <span class="text-gradient">Intelligent Future.</span>
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight font-mono mb-6">
+                    Smart Logic.<br>
+                    <span class="text-gradient">Real Results.</span>
                 </h1>
                 
-                <p class="text-lg text-textGray max-w-xl mx-auto md:mx-0 leading-relaxed">
-                    I am Dipak Kadam. I merge **Mathematical Logic** with **AI Automation** to build systems that don't just work—they think. Expert in React, Python, and the Zoho Ecosystem.
+                <p class="text-lg text-gray-300 leading-relaxed mb-8 max-w-2xl">
+                    I am <strong>Dipak Kadam</strong>. I merge Mathematical Logic with AI Automation to build systems that don't just work—they think. 
+                    <br><br>
+                    Expert in <strong>React, Python, and the Zoho Ecosystem</strong>. I turn complex manual processes into streamlined, automated workflows.
                 </p>
 
-                <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
+                <div class="flex flex-wrap gap-4">
                     <a href="#contact" class="px-8 py-3.5 rounded-xl bg-primary text-black font-bold hover:shadow-[0_0_20px_rgba(0,242,255,0.4)] transition-all">
-                        Let's Talk Logic
+                        Start a Project
                     </a>
-                    <a href="https://github.com/dmk07" class="px-8 py-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
-                        <i class="fab fa-github mr-2"></i> GitHub
+                    <a href="#experience" class="px-8 py-3.5 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md hover:bg-white/20 transition-all">
+                        View My Work
                     </a>
                 </div>
-            </div>
-
-            <div class="relative w-72 h-72 md:w-96 md:h-96 group">
-                <div class="absolute inset-0 bg-gradient-to-tr from-primary to-secondary rounded-full blur-[60px] opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                <img 
-                    src="https://media.licdn.com/dms/image/v2/D4D03AQFKqJrszhUq_Q/profile-displayphoto-scale_200_200/B4DZtXD3uGGUAY-/0/1766692192684?e=1770854400&v=beta&t=UuzW-Xz8WIE8ksCJVM4A5gH5ehc8SFW4dpWPyObffaE" 
-                    alt="Dipak Kadam" 
-                    class="relative w-full h-full object-cover rounded-full border-4 border-dark/50 ring-4 ring-white/10 shadow-2xl"
-                >
-                <div class="absolute bottom-4 right-4 bg-dark/80 backdrop-blur border border-white/10 p-3 rounded-xl flex items-center gap-3 shadow-xl">
-                    <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-400">
-                        <i class="fas fa-check"></i>
+                
+                <div class="mt-12 flex items-center gap-6 text-sm font-mono text-gray-400">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-primary"></i> 5+ Years Exp.
                     </div>
-                    <div class="text-left">
-                        <div class="text-[10px] uppercase text-textGray font-bold">Verified</div>
-                        <div class="text-sm font-bold">Zoho Expert</div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-primary"></i> Zoho Expert
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-primary"></i> Verified
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <section id="stack" class="py-20 px-6">
+    <section id="stack" class="py-20 px-6 bg-dark">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-mono font-bold mb-10 text-center">My Technical Arsenal</h2>
             
@@ -177,7 +152,7 @@
                 
                 <div class="bento-card p-8 md:col-span-2 flex flex-col justify-between group">
                     <div>
-                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-4 group-hover:scale-110 transition-transform">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary text-2xl mb-4">
                             <i class="fas fa-robot"></i>
                         </div>
                         <h3 class="text-2xl font-bold mb-2">AI & Automation</h3>
@@ -189,8 +164,8 @@
                     </div>
                 </div>
 
-                <div class="bento-card p-6 flex flex-col justify-center items-center text-center group">
-                    <i class="fab fa-react text-4xl text-blue-400 mb-4 group-hover:rotate-180 transition-transform duration-700"></i>
+                <div class="bento-card p-6 flex flex-col justify-center items-center text-center">
+                    <i class="fab fa-react text-4xl text-blue-400 mb-4"></i>
                     <h3 class="text-lg font-bold">Modern Web</h3>
                     <p class="text-xs text-textGray mt-2">React.js, Tailwind, HTML5</p>
                 </div>
@@ -211,14 +186,9 @@
                         <div class="text-3xl font-bold text-white">100%</div>
                         <div class="text-xs text-textGray uppercase tracking-widest mt-1">Job Success</div>
                     </div>
-                    <div class="w-px h-12 bg-white/10"></div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-white">24/7</div>
-                        <div class="text-xs text-textGray uppercase tracking-widest mt-1">System Uptime</div>
-                    </div>
                 </div>
 
-                <div class="bento-card p-8 md:col-span-2 group">
+                <div class="bento-card p-8 md:col-span-2">
                     <div class="flex items-start justify-between mb-4">
                         <h3 class="text-xl font-bold">IT Infrastructure</h3>
                         <i class="fas fa-server text-2xl text-purple-400"></i>
@@ -229,7 +199,6 @@
                     <div class="flex flex-wrap gap-2">
                         <span class="px-2 py-1 rounded bg-white/5 text-[10px]">Linux</span>
                         <span class="px-2 py-1 rounded bg-white/5 text-[10px]">Windows Server</span>
-                        <span class="px-2 py-1 rounded bg-white/5 text-[10px]">Grafana</span>
                         <span class="px-2 py-1 rounded bg-white/5 text-[10px]">Security</span>
                     </div>
                 </div>
@@ -267,21 +236,20 @@
             <div class="relative pl-8 md:pl-0 border-l-2 border-white/10 md:border-none">
                 <div class="md:flex items-center justify-between group">
                     <div class="hidden md:block w-5/12 text-right pr-8">
-                        <p class="text-sm text-textGray leading-relaxed">
-                            Designed high-availability environments using Linux/Windows. Implemented Zabbix & Grafana monitoring to prevent downtime.
-                        </p>
+                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">System Engineer</h3>
+                        <div class="text-sm text-textGray">Royaltech</div>
                     </div>
                     
                     <div class="absolute left-[-9px] md:left-1/2 md:transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-dark border-2 border-white/20 z-10 group-hover:border-primary transition-colors"></div>
                     
                     <div class="md:w-5/12 md:pl-8">
-                        <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">System Engineer</h3>
-                        <div class="text-sm text-textGray mb-2">Royaltech | Apr 2025 - Sep 2025</div>
-                        <div class="md:hidden">
-                            <p class="text-sm text-textGray leading-relaxed">
-                                Designed high-availability environments using Linux/Windows. Implemented Zabbix & Grafana monitoring to prevent downtime.
-                            </p>
+                        <div class="md:hidden mb-2">
+                            <h3 class="text-xl font-bold text-white">System Engineer</h3>
+                            <div class="text-sm text-textGray">Royaltech | Apr 2025 - Sep 2025</div>
                         </div>
+                        <p class="text-sm text-textGray leading-relaxed">
+                            Designed high-availability environments using Linux/Windows. Implemented Zabbix & Grafana monitoring to prevent downtime.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -290,7 +258,7 @@
                 <div class="md:flex items-center justify-between group">
                     <div class="hidden md:block w-5/12 text-right pr-8">
                          <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">IT Administrator</h3>
-                        <div class="text-sm text-textGray">SKS Engineering Solutions</div>
+                        <div class="text-sm text-textGray">SKS Engineering</div>
                     </div>
                     
                     <div class="absolute left-[-9px] md:left-1/2 md:transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-dark border-2 border-white/20 z-10 group-hover:border-primary transition-colors"></div>
@@ -298,10 +266,10 @@
                     <div class="md:w-5/12 md:pl-8">
                          <div class="md:hidden mb-2">
                             <h3 class="text-xl font-bold text-white">IT Administrator</h3>
-                            <div class="text-sm text-textGray">SKS Engineering | Jul 2024 - Mar 2025</div>
+                            <div class="text-sm text-textGray">Jul 2024 - Mar 2025</div>
                         </div>
                         <p class="text-sm text-textGray leading-relaxed">
-                            Managed enterprise infrastructure, security patching, and disaster recovery. ensured 99% operational continuity.
+                            Managed enterprise infrastructure, security patching, and disaster recovery. Ensured 99% operational continuity.
                         </p>
                     </div>
                 </div>
@@ -310,9 +278,7 @@
         </div>
     </section>
 
-    <footer id="contact" class="py-20 border-t border-white/5 relative overflow-hidden">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
-
+    <footer id="contact" class="py-20 border-t border-white/5 relative overflow-hidden bg-dark">
         <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
             <h2 class="text-4xl md:text-5xl font-mono font-bold mb-8">Ready to Automate?</h2>
             <p class="text-textGray mb-10">
@@ -336,121 +302,5 @@
         </div>
     </footer>
 
-    <script>
-        // --- 1. MOUSE HOVER EFFECT FOR CARDS ---
-        document.querySelectorAll('.bento-card').forEach(card => {
-            card.onmousemove = e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
-            };
-        });
-
-        // --- 2. PARTICLE BACKGROUND SYSTEM ---
-        const canvas = document.getElementById('neural-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-        
-        // Configuration
-        const particleCount = 60;
-        const connectionDistance = 150;
-        const mouseDistance = 200;
-
-        // Mouse tracking
-        let mouse = { x: null, y: null };
-        window.addEventListener('mousemove', e => {
-            mouse.x = e.x;
-            mouse.y = e.y;
-        });
-
-        // Resize handler
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        // Particle Class
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 1.5 + 1;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Bounce off edges
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-
-                // Mouse interaction
-                if (mouse.x != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
-                    let distance = Math.sqrt(dx*dx + dy*dy);
-                    if (distance < mouseDistance) {
-                        const forceDirectionX = dx / distance;
-                        const forceDirectionY = dy / distance;
-                        const force = (mouseDistance - distance) / mouseDistance;
-                        const directionX = forceDirectionX * force * 0.5;
-                        const directionY = forceDirectionY * force * 0.5;
-                        this.vx += directionX;
-                        this.vy += directionY;
-                    }
-                }
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = '#00f2ff';
-                ctx.fill();
-            }
-        }
-
-        // Init Particles
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-
-        // Animation Loop
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            
-            particles.forEach((p, index) => {
-                p.update();
-                p.draw();
-
-                // Draw Connections
-                for (let j = index; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dx = p.x - p2.x;
-                    const dy = p.y - p2.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < connectionDistance) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(112, 0, 255, ${1 - distance/connectionDistance})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            });
-
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
 </body>
 </html>
