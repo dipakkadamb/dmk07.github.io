@@ -3,452 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMK07 | AI Engineer & Architect</title>
+    <title>Dipak Kadam | AI Architect & Zoho Specialist</title>
     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- CORE ESTHETICS --- */
+        /* --- DESIGN SYSTEM --- */
         :root {
-            --bg: #050505;
-            --surface: #0a0a0a;
-            --primary: #00f3ff; /* Cyan Neon */
-            --secondary: #bd00ff; /* Purple Math */
-            --text-main: #e0e0e0;
-            --text-dim: #6b7280;
-            --grid-line: rgba(255, 255, 255, 0.03);
+            --bg-deep: #050505;
+            --bg-card: rgba(20, 20, 25, 0.7);
+            --accent-primary: #00f0ff; /* Cyan (AI) */
+            --accent-secondary: #7000ff; /* Violet (Math) */
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --font-tech: 'JetBrains Mono', monospace;
+            --font-body: 'Inter', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg);
+            background-color: var(--bg-deep);
             color: var(--text-main);
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--font-body);
             overflow-x: hidden;
-            height: 100vh;
         }
 
-        /* Graph Paper Background Effect */
-        .math-grid {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(var(--grid-line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -2;
-        }
-
-        /* Canvas for Particles */
-        #neural-network {
+        /* --- BACKGROUND EFFECTS --- */
+        #canvas-container {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.6;
+            background: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000000 100%);
         }
 
-        /* --- REACT CONTAINER LAYOUT --- */
-        #root {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
+        /* --- LAYOUT UTILITIES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .flex-center { display: flex; align-items: center; justify-content: center; }
+        .section-padding { padding: 100px 0; }
 
         /* --- TYPOGRAPHY --- */
-        .font-mono { font-family: 'Fira Code', monospace; }
-        .text-gradient {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        h1, h2, h3 { font-family: var(--font-body); font-weight: 800; letter-spacing: -0.05em; }
+        .mono { font-family: var(--font-tech); color: var(--accent-primary); font-size: 0.9rem; }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- LAYOUT COMPONENTS --- */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            max-width: 1400px;
-            margin: 0 auto;
-            height: 100vh;
-            width: 100%;
+        /* --- COMPONENTS --- */
+        
+        /* Glass Card */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 32px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        /* Sidebar Styling */
-        .sidebar {
-            background: rgba(10, 10, 10, 0.8);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.15);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 0;
+            z-index: 100;
+            background: rgba(5, 5, 5, 0.8);
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-glass);
         }
 
-        .profile-img-container {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: var(--accent-primary); }
+
+        /* Hero Image */
+        .profile-orbit {
+            width: 280px; height: 280px;
             position: relative;
+            border-radius: 50%;
+            padding: 6px;
+            background: linear-gradient(var(--accent-primary), var(--accent-secondary));
+            animation: pulse-glow 3s infinite alternate;
         }
 
         .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%; /* Circle */
-            object-fit: cover;
-            border: 2px solid var(--primary);
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Orbit Animation */
-        .orbit {
-            position: absolute;
-            top: -10px; left: -10px; right: -10px; bottom: -10px;
-            border: 1px solid rgba(189, 0, 255, 0.3);
+            width: 100%; height: 100%;
             border-radius: 50%;
-            animation: spin 10s linear infinite;
-        }
-        .orbit::after {
-            content: ''; position: absolute; top: 50%; right: -4px;
-            width: 8px; height: 8px; background: var(--secondary);
-            border-radius: 50%; box-shadow: 0 0 10px var(--secondary);
+            object-fit: cover;
+            border: 4px solid var(--bg-deep);
+            background: #111;
         }
 
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        .nav-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 10px;
-            background: transparent;
-            border: 1px solid transparent;
-            color: var(--text-dim);
-            text-align: left;
-            cursor: pointer;
-            font-family: 'Fira Code', monospace;
-            transition: 0.3s;
-            border-radius: 8px;
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+            to { box-shadow: 0 0 50px rgba(112, 0, 255, 0.4); }
         }
 
-        .nav-btn:hover, .nav-btn.active {
-            background: rgba(0, 243, 255, 0.05);
-            color: var(--primary);
-            border-color: rgba(0, 243, 255, 0.2);
-            padding-left: 20px;
-        }
-
-        /* Content Area */
-        .content-area {
-            padding: 50px;
-            overflow-y: auto;
+        /* Timeline */
+        .timeline-item {
             position: relative;
+            padding-left: 40px;
+            margin-bottom: 50px;
+            border-left: 2px solid var(--border-glass);
         }
 
-        /* Cards */
-        .card {
-            background: rgba(20, 20, 20, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-        .card:hover {
-            border-color: var(--primary);
-            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
-            transform: translateY(-2px);
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px; top: 0;
+            width: 16px; height: 16px;
+            background: var(--bg-deep);
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
         }
 
-        /* Skill Tags */
+        /* Skills Tags */
         .skill-tag {
             display: inline-block;
-            padding: 5px 12px;
-            margin: 4px;
-            background: rgba(0, 243, 255, 0.05);
-            border: 1px solid rgba(0, 243, 255, 0.1);
-            color: var(--primary);
-            font-size: 0.8rem;
-            font-family: 'Fira Code', monospace;
+            padding: 6px 14px;
+            margin: 0 8px 8px 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass);
             border-radius: 4px;
+            font-family: var(--font-tech);
+            font-size: 0.8rem;
+            color: var(--accent-primary);
         }
 
         /* Mobile Adjustments */
-        @media (max-width: 900px) {
-            .main-layout { grid-template-columns: 1fr; height: auto; }
-            .sidebar { position: relative; padding: 20px; flex-direction: row; flex-wrap: wrap; align-items: center; }
-            .profile-img-container { margin: 0 20px 0 0; width: 80px; height: 80px; }
-            .nav-menu { display: flex; overflow-x: auto; gap: 10px; width: 100%; margin-top: 20px; }
-            .nav-btn { white-space: nowrap; }
-            .orbit { display: none; }
-            .content-area { padding: 20px; }
+        @media(max-width: 768px) {
+            h1 { font-size: 2.5rem !important; }
+            .profile-orbit { width: 200px; height: 200px; margin-bottom: 40px; }
+            .hero-content { flex-direction: column-reverse; text-align: center; }
+            .timeline-item { padding-left: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="math-grid"></div>
-    <canvas id="neural-network"></canvas>
-    
     <div id="root"></div>
 
     <script type="text/babel">
-        
         const { useState, useEffect, useRef } = React;
 
-        // --- PARTICLE BACKGROUND COMPONENT ---
-        const ParticleBackground = () => {
+        /* --- PARTICLE BACKGROUND (The Math/AI Visual) --- */
+        const NeuralBackground = () => {
             const canvasRef = useRef(null);
 
             useEffect(() => {
                 const canvas = canvasRef.current;
                 const ctx = canvas.getContext('2d');
-                let animationFrameId;
+                let width, height;
+                let particles = [];
 
-                const resizeCanvas = () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
+                const resize = () => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
                 };
-
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
-
-                // Particle Logic
-                const particles = [];
-                const particleCount = 60; // Number of nodes
+                window.addEventListener('resize', resize);
+                resize();
 
                 class Particle {
                     constructor() {
-                        this.x = Math.random() * canvas.width;
-                        this.y = Math.random() * canvas.height;
+                        this.x = Math.random() * width;
+                        this.y = Math.random() * height;
                         this.vx = (Math.random() - 0.5) * 0.5;
                         this.vy = (Math.random() - 0.5) * 0.5;
-                        this.size = Math.random() * 2 + 1;
                     }
-
                     update() {
                         this.x += this.vx;
                         this.y += this.vy;
-                        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-                    }
-
-                    draw() {
-                        ctx.fillStyle = '#00f3ff';
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fill();
+                        if (this.x < 0 || this.x > width) this.vx *= -1;
+                        if (this.y < 0 || this.y > height) this.vy *= -1;
                     }
                 }
 
-                for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+                for(let i=0; i<70; i++) particles.push(new Particle());
 
                 const animate = () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    particles.forEach((p, index) => {
-                        p.update();
-                        p.draw();
-                        
-                        // Draw Connections (Neural Lines)
-                        for (let j = index; j < particles.length; j++) {
-                            const dx = p.x - particles[j].x;
-                            const dy = p.y - particles[j].y;
-                            const distance = Math.sqrt(dx * dx + dy * dy);
+                    ctx.clearRect(0,0,width,height);
+                    ctx.fillStyle = '#00f0ff';
+                    ctx.strokeStyle = 'rgba(112, 0, 255, 0.15)'; // Purple lines
 
-                            if (distance < 150) {
+                    particles.forEach((p, i) => {
+                        p.update();
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2);
+                        ctx.fill();
+
+                        // Connect particles (Graph Theory Visual)
+                        for(let j=i+1; j<particles.length; j++) {
+                            const p2 = particles[j];
+                            const dist = Math.hypot(p.x-p2.x, p.y-p2.y);
+                            if(dist < 120) {
                                 ctx.beginPath();
-                                ctx.strokeStyle = `rgba(0, 243, 255, ${1 - distance / 150})`;
-                                ctx.lineWidth = 0.5;
                                 ctx.moveTo(p.x, p.y);
-                                ctx.lineTo(particles[j].x, particles[j].y);
+                                ctx.lineTo(p2.x, p2.y);
                                 ctx.stroke();
                             }
                         }
                     });
-                    animationFrameId = requestAnimationFrame(animate);
+                    requestAnimationFrame(animate);
                 };
                 animate();
-
-                return () => {
-                    window.removeEventListener('resize', resizeCanvas);
-                    cancelAnimationFrame(animationFrameId);
-                };
             }, []);
 
-            return <canvas ref={canvasRef} id="neural-network" style={{position:'fixed', top:0, left:0, zIndex:-1, opacity:0.4}} />;
+            return <div id="canvas-container"><canvas ref={canvasRef} /></div>;
         };
 
-        // --- COMPONENTS ---
+        /* --- HEADER --- */
+        const Navbar = () => (
+            <nav>
+                <div className="container" style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                    <div style={{fontWeight:'700', fontSize:'1.2rem'}}>
+                        DMK<span style={{color:'var(--accent-primary)'}}>07</span>
+                    </div>
+                    <div className="nav-links">
+                        <a href="#about" className="nav-link">About</a>
+                        <a href="#skills" className="nav-link">Stack</a>
+                        <a href="#experience" className="nav-link">Experience</a>
+                        <a href="#contact" className="nav-link" style={{color:'var(--accent-primary)'}}>Contact</a>
+                    </div>
+                </div>
+            </nav>
+        );
 
-        const Sidebar = ({ activeTab, setActiveTab }) => {
-            return (
-                <aside class="sidebar">
-                    <div style={{textAlign: 'center', width: '100%'}}>
-                        <div class="profile-img-container">
-                            <div class="orbit"></div>
-                            <img src="https://media.licdn.com/dms/image/v2/D4D03AQFKqJrszhUq_Q/profile-displayphoto-scale_200_200/B4DZtXD3uGGUAY-/0/1766692192684?e=1770854400&v=beta&t=UuzW-Xz8WIE8ksCJVM4A5gH5ehc8SFW4dpWPyObffaE" alt="DMK07" class="profile-img" />
+        /* --- HERO SECTION --- */
+        const Hero = () => (
+            <section style={{minHeight:'100vh', display:'flex', alignItems:'center', paddingTop:'80px'}}>
+                <div className="container hero-content" style={{display:'flex', alignItems:'center', gap:'50px'}}>
+                    <div style={{flex:1}}>
+                        <div className="mono" style={{marginBottom:'10px'}}>
+                            &lt;Hello_World /&gt; I am
                         </div>
-                        <h2 class="font-mono" style={{fontSize: '1.5rem', marginBottom: '5px'}}>DMK07</h2>
-                        <p style={{color: 'var(--text-dim)', fontSize: '0.9rem', marginBottom: '30px'}}>
-                            &lt;AI_Architect /&gt;
+                        <h1 style={{fontSize:'4rem', lineHeight:'1.1', marginBottom:'20px'}}>
+                            Dipak Kadam
+                        </h1>
+                        <h2 style={{fontSize:'1.5rem', color:'var(--text-muted)', marginBottom:'30px', fontWeight:'400'}}>
+                            <span className="gradient-text">AI Architect</span> & <span className="gradient-text">Zoho Specialist</span>
+                        </h2>
+                        <p style={{fontSize:'1.1rem', color:'var(--text-muted)', lineHeight:'1.8', maxWidth:'600px', marginBottom:'40px'}}>
+                            Merging mathematical logic with modern web technologies. I build intelligent automated systems, 
+                            scalable web applications, and secure IT infrastructure.
                         </p>
-                    </div>
-
-                    <nav class="nav-menu">
-                        {['overview', 'stack', 'experience', 'projects'].map((tab) => (
-                            <button 
-                                key={tab}
-                                className={`nav-btn ${activeTab === tab ? 'active' : ''}`}
-                                onClick={() => setActiveTab(tab)}
-                            >
-                                <i className={`fas fa-${tab === 'overview' ? 'cube' : tab === 'stack' ? 'code' : tab === 'experience' ? 'history' : 'project-diagram'}`} style={{marginRight:'10px'}}></i>
-                                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                            </button>
-                        ))}
-                    </nav>
-
-                    <div style={{marginTop: 'auto', textAlign: 'center'}}>
-                        <div style={{display: 'flex', justifyContent: 'center', gap: '15px', fontSize: '1.2rem'}}>
-                            <a href="https://github.com/dmk07" style={{color: 'var(--text-main)'}}><i class="fab fa-github"></i></a>
-                            <a href="#" style={{color: 'var(--text-main)'}}><i class="fab fa-linkedin"></i></a>
-                            <a href="#" style={{color: 'var(--text-main)'}}><i class="fas fa-envelope"></i></a>
+                        <div style={{display:'flex', gap:'20px'}}>
+                            <a href="#contact" style={{
+                                padding:'12px 30px', background:'var(--accent-primary)', color:'#000', 
+                                fontWeight:'700', borderRadius:'50px', textDecoration:'none'
+                            }}>
+                                Hire Me
+                            </a>
+                            <a href="https://github.com/dmk07" target="_blank" style={{
+                                padding:'12px 30px', border:'1px solid var(--border-glass)', color:'#fff', 
+                                borderRadius:'50px', textDecoration:'none'
+                            }}>
+                                <i className="fab fa-github"></i> GitHub
+                            </a>
                         </div>
                     </div>
-                </aside>
+                    
+                    <div>
+                        <div className="profile-orbit">
+                            <img src="https://media.licdn.com/dms/image/v2/D4D03AQFKqJrszhUq_Q/profile-displayphoto-scale_200_200/B4DZtXD3uGGUAY-/0/1766692192684?e=1770854400&v=beta&t=UuzW-Xz8WIE8ksCJVM4A5gH5ehc8SFW4dpWPyObffaE" alt="Dipak Kadam" className="profile-img" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        /* --- SKILLS SECTION --- */
+        const Skills = () => {
+            const skillSets = [
+                {
+                    icon: "fa-code",
+                    title: "Web Engineering",
+                    desc: "Responsive, high-performance web solutions.",
+                    tags: ["React.js", "JavaScript (ES6)", "HTML5/CSS3", "JSON"]
+                },
+                {
+                    icon: "fa-project-diagram",
+                    title: "Zoho Architecture",
+                    desc: "End-to-end business process automation.",
+                    tags: ["Zoho CRM", "Zoho Flow", "Deluge Script", "Webhooks", "REST API"]
+                },
+                {
+                    icon: "fa-brain",
+                    title: "AI & Intelligence",
+                    desc: "Integrating LLMs and automation tools.",
+                    tags: ["ChatGPT API", "GitHub Copilot", "Chatbots", "Automated Testing"]
+                },
+                {
+                    icon: "fa-server",
+                    title: "System Infra",
+                    desc: "Secure, scalable server management.",
+                    tags: ["Linux Admin", "Windows Server", "Zabbix/Grafana", "Python"]
+                }
+            ];
+
+            return (
+                <section id="skills" className="section-padding">
+                    <div className="container">
+                        <div className="mono" style={{marginBottom:'10px'}}>// Technical_Arsenal</div>
+                        <h2 style={{fontSize:'2.5rem', marginBottom:'50px'}}>Engineering Competence</h2>
+                        
+                        <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:'24px'}}>
+                            {skillSets.map((skill, i) => (
+                                <div key={i} className="glass-card">
+                                    <i className={`fas ${skill.icon}`} style={{fontSize:'2rem', color:'var(--accent-primary)', marginBottom:'20px'}}></i>
+                                    <h3 style={{fontSize:'1.25rem', marginBottom:'10px'}}>{skill.title}</h3>
+                                    <p style={{color:'var(--text-muted)', marginBottom:'20px', fontSize:'0.9rem'}}>{skill.desc}</p>
+                                    <div>
+                                        {skill.tags.map(tag => <span key={tag} className="skill-tag">{tag}</span>)}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
             );
         };
 
-        const Overview = () => (
-            <div className="animate-fade-in">
-                <h1 style={{fontSize: '3rem', fontWeight: '700', lineHeight: '1.1', marginBottom: '20px'}}>
-                    Solving Problems with <br/>
-                    <span class="text-gradient">Algorithmic Precision</span>
-                </h1>
-                <p style={{fontSize: '1.1rem', color: 'var(--text-dim)', maxWidth: '600px', lineHeight: '1.8'}}>
-                    I operate at the intersection of <strong>Artificial Intelligence</strong>, <strong>Web Development</strong>, and <strong>Enterprise Automation</strong>. 
-                    I don't just write code; I design intelligent systems that learn, adapt, and scale.
-                </p>
-
-                <div style={{marginTop: '40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px'}}>
-                    <div class="card">
-                        <i class="fas fa-brain text-gradient" style={{fontSize: '2rem', marginBottom: '15px'}}></i>
-                        <h3 class="font-mono">AI Integration</h3>
-                        <p style={{fontSize: '0.9rem', color: 'var(--text-dim)', marginTop:'10px'}}>LLMs, Chatbots, and Predictive Models embedded into web infrastructure.</p>
-                    </div>
-                    <div class="card">
-                        <i class="fas fa-network-wired text-gradient" style={{fontSize: '2rem', marginBottom: '15px'}}></i>
-                        <h3 class="font-mono">Zoho Architecture</h3>
-                        <p style={{fontSize: '0.9rem', color: 'var(--text-dim)', marginTop:'10px'}}>Advanced Deluge scripting, API Webhooks, and CRM automation.</p>
-                    </div>
-                </div>
-            </div>
-        );
-
-        const Stack = () => (
-            <div>
-                <h2 class="font-mono" style={{marginBottom: '30px', borderBottom: '1px solid var(--grid-line)', paddingBottom: '10px'}}>// Technical_Stack</h2>
-                
-                <div class="card">
-                    <h3 style={{marginBottom: '15px', color: 'var(--primary)'}}>Frontend & Interface</h3>
-                    <div>
-                        {['React.js', 'JavaScript (ES6+)', 'HTML5 / CSS3', 'Tailwind', 'Responsive Design'].map(s => <span key={s} class="skill-tag">{s}</span>)}
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 style={{marginBottom: '15px', color: 'var(--secondary)'}}>AI & Automation</h3>
-                    <div>
-                        {['Zoho CRM', 'Zoho Flow', 'Deluge', 'OpenAI API', 'GitHub Copilot', 'Webhooks'].map(s => <span key={s} class="skill-tag">{s}</span>)}
-                    </div>
-                </div>
-
-                <div class="card">
-                    <h3 style={{marginBottom: '15px', color: '#fff'}}>Infrastructure</h3>
-                    <div>
-                        {['Linux Systems', 'Windows Server', 'Python', 'Zabbix', 'Security Protocols'].map(s => <span key={s} class="skill-tag">{s}</span>)}
-                    </div>
-                </div>
-            </div>
-        );
-
-        const Experience = () => (
-            <div>
-                <h2 class="font-mono" style={{marginBottom: '30px', borderBottom: '1px solid var(--grid-line)', paddingBottom: '10px'}}>// Career_Timeline</h2>
-                
-                <div class="card">
-                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '10px'}}>
-                        <h3 class="font-mono" style={{color: 'var(--primary)'}}>AI Web Developer</h3>
-                        <span class="font-mono" style={{fontSize: '0.8rem', opacity: 0.7}}>2025 - Present</span>
-                    </div>
-                    <h4 style={{marginBottom: '10px'}}>ZM Technologies</h4>
-                    <ul style={{listStyle: 'none', color: 'var(--text-dim)', fontSize: '0.9rem'}}>
-                        <li style={{marginBottom: '5px'}}>+ Developing AI-infused web applications.</li>
-                        <li style={{marginBottom: '5px'}}>+ Architecting complex Zoho-to-Web integrations via REST APIs.</li>
-                        <li style={{marginBottom: '5px'}}>+ Automating lead capture and business workflows.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '10px'}}>
-                        <h3 class="font-mono" style={{color: 'var(--secondary)'}}>System Engineer</h3>
-                        <span class="font-mono" style={{fontSize: '0.8rem', opacity: 0.7}}>Apr 2025 - Sep 2025</span>
-                    </div>
-                    <h4 style={{marginBottom: '10px'}}>Royaltech</h4>
-                    <ul style={{listStyle: 'none', color: 'var(--text-dim)', fontSize: '0.9rem'}}>
-                        <li style={{marginBottom: '5px'}}>+ Designed high-availability Windows/Linux environments.</li>
-                        <li style={{marginBottom: '5px'}}>+ Implemented Grafana monitoring and Python automation scripts.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '10px'}}>
-                        <h3 class="font-mono">IT Administrator</h3>
-                        <span class="font-mono" style={{fontSize: '0.8rem', opacity: 0.7}}>2024 - 2025</span>
-                    </div>
-                    <h4 style={{marginBottom: '10px'}}>SKS Engineering</h4>
-                    <p style={{fontSize: '0.9rem', color: 'var(--text-dim)'}}>Managed enterprise infrastructure, security patching, and disaster recovery.</p>
-                </div>
-            </div>
-        );
-
-        const Projects = () => (
-            <div>
-                <h2 class="font-mono" style={{marginBottom: '30px', borderBottom: '1px solid var(--grid-line)', paddingBottom: '10px'}}>// Selected_Works</h2>
-                <div style={{textAlign: 'center', padding: '50px', color: 'var(--text-dim)'}}>
-                    <i class="fas fa-code-branch" style={{fontSize: '3rem', marginBottom: '20px', opacity: 0.3}}></i>
-                    <p>Check my GitHub for the latest repositories and code snippets.</p>
-                    <br/>
-                    <a href="https://github.com/dmk07" class="skill-tag" style={{padding: '10px 20px', fontSize: '1rem'}}>github.com/dmk07</a>
-                </div>
-            </div>
-        );
-
-        // --- MAIN APP ---
-        const App = () => {
-            const [activeTab, setActiveTab] = useState('overview');
+        /* --- EXPERIENCE SECTION --- */
+        const Experience = () => {
+            // Data extracted from PDF
+            const jobs = [
+                {
+                    role: "AI Web Developer",
+                    company: "ZM Technologies",
+                    date: "Sep 2025 - Present",
+                    desc: [
+                        "Building intelligent web applications by leveraging AI-driven tools.",
+                        "Designing Website-to-Zoho integrations (CRM, Flow, API) for lead capture.",
+                        "Automating workflow execution using Webhooks and REST APIs.",
+                        "Ensuring cross-browser compatibility and secure API usage."
+                    ]
+                },
+                {
+                    role: "System Engineer",
+                    company: "Royaltech",
+                    date: "Apr 2025 - Sep 2025",
+                    desc: [
+                        "Designed scalable IT environments focusing on high availability.",
+                        "Implemented monitoring via Grafana & Zabbix to prevent failures.",
+                        "Automated admin tasks using Python and Bash scripting.",
+                        "Managed security hardening and performance tuning."
+                    ]
+                },
+                {
+                    role: "IT Administrator",
+                    company: "SKS Engineering Solutions",
+                    date: "Jul 2024 - Mar 2025",
+                    desc: [
+                        "Managed infrastructure, access control, and user permissions.",
+                        "Executed disaster recovery operations and system patching.",
+                        "Provided technical support and troubleshooting for networks."
+                    ]
+                }
+            ];
 
             return (
-                <div className="main-layout">
-                    <ParticleBackground />
-                    <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-                    <main className="content-area">
-                        {activeTab === 'overview' && <Overview />}
-                        {activeTab === 'stack' && <Stack />}
-                        {activeTab === 'experience' && <Experience />}
-                        {activeTab === 'projects' && <Projects />}
-                    </main>
+                <section id="experience" className="section-padding" style={{background:'rgba(255,255,255,0.02)'}}>
+                    <div className="container">
+                        <div className="mono" style={{marginBottom:'10px'}}>// Career_Trajectory</div>
+                        <h2 style={{fontSize:'2.5rem', marginBottom:'50px'}}>Professional Experience</h2>
+                        
+                        <div style={{maxWidth:'800px'}}>
+                            {jobs.map((job, i) => (
+                                <div key={i} className="timeline-item">
+                                    <h3 style={{fontSize:'1.5rem', marginBottom:'5px'}}>{job.role}</h3>
+                                    <div style={{color:'var(--accent-primary)', fontWeight:'600', marginBottom:'5px'}}>{job.company}</div>
+                                    <div className="mono" style={{color:'var(--text-muted)', fontSize:'0.85rem', marginBottom:'15px'}}>{job.date}</div>
+                                    <ul style={{listStyle:'none', color:'var(--text-muted)'}}>
+                                        {job.desc.map((d, index) => (
+                                            <li key={index} style={{marginBottom:'8px', display:'flex'}}>
+                                                <span style={{color:'var(--accent-secondary)', marginRight:'10px'}}>➤</span>
+                                                {d}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        /* --- FOOTER / CONTACT --- */
+        const Footer = () => (
+            <footer id="contact" style={{borderTop:'1px solid var(--border-glass)', padding:'60px 0', textAlign:'center'}}>
+                <div className="container">
+                    <h2 style={{fontSize:'2.5rem', marginBottom:'30px'}}>Ready to Collaborate?</h2>
+                    <p style={{color:'var(--text-muted)', marginBottom:'40px'}}>
+                        Available for AI Integration, Zoho Automation, and Web Development projects.
+                    </p>
+                    
+                    <div style={{display:'flex', justifyContent:'center', gap:'30px', marginBottom:'50px'}}>
+                        <a href="mailto:dipak100kadam@gmail.com" className="glass-card" style={{padding:'20px', textDecoration:'none', color:'white'}}>
+                            <i className="fas fa-envelope" style={{marginBottom:'10px', fontSize:'1.5rem', color:'var(--accent-primary)'}}></i>
+                            <div>dipak100kadam@gmail.com</div>
+                        </a>
+                        <a href="tel:+917057807659" className="glass-card" style={{padding:'20px', textDecoration:'none', color:'white'}}>
+                            <i className="fas fa-phone" style={{marginBottom:'10px', fontSize:'1.5rem', color:'var(--accent-primary)'}}></i>
+                            <div>+91 7057 807 659</div>
+                        </a>
+                    </div>
+
+                    <div style={{color:'var(--text-muted)', fontSize:'0.9rem'}}>
+                        &copy; 2026 Dipak Kadam. Engineered with React & Mathematics.
+                    </div>
                 </div>
+            </footer>
+        );
+
+        /* --- MAIN APP --- */
+        const App = () => {
+            return (
+                <React.Fragment>
+                    <NeuralBackground />
+                    <Navbar />
+                    <Hero />
+                    <Skills />
+                    <Experience />
+                    <Footer />
+                </React.Fragment>
             );
         };
 
